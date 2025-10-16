@@ -1,0 +1,158 @@
+# Account Service GraphQL Examples
+# Use these queries and mutations in GraphiQL at http://localhost:8081/graphiql
+
+# ===== MUTATIONS =====
+
+# Create Savings Account (All Dynamic Values)
+mutation CreateSavingsAccount {
+  createAccount(input: {
+    customerId: 1
+    accountType: "SAVINGS"
+    initialBalance: 5000.00
+    currency: "USD"
+  }) {
+    id
+    accountNumber
+    customerId
+    accountType
+    balance
+    currency
+    status
+    createdAt
+    updatedAt
+  }
+}
+
+# Create Checking Account
+mutation CreateCheckingAccount {
+  createAccount(input: {
+    customerId: 1
+    accountType: "CHECKING"
+    initialBalance: 2000.00
+    currency: "USD"
+  }) {
+    id
+    accountNumber
+    customerId
+    accountType
+    balance
+    currency
+    status
+  }
+}
+
+# Create Another Account for Different Customer
+mutation CreateAccount2 {
+  createAccount(input: {
+    customerId: 2
+    accountType: "SAVINGS"
+    initialBalance: 10000.00
+    currency: "USD"
+  }) {
+    id
+    accountNumber
+    balance
+  }
+}
+
+# Credit (Deposit) Money - Dynamic Amount
+mutation CreditAccount {
+  updateBalance(input: {
+    accountNumber: "ACC123456789ABC"
+    amount: 1000.00
+    operationType: "CREDIT"
+  }) {
+    id
+    accountNumber
+    balance
+    updatedAt
+  }
+}
+
+# Debit (Withdraw) Money - Dynamic Amount
+mutation DebitAccount {
+  updateBalance(input: {
+    accountNumber: "ACC123456789ABC"
+    amount: 500.00
+    operationType: "DEBIT"
+  }) {
+    id
+    accountNumber
+    balance
+    updatedAt
+  }
+}
+
+# Update Account Status
+mutation UpdateAccountStatus {
+  updateAccountStatus(
+    accountNumber: "ACC123456789ABC"
+    status: "FROZEN"
+  ) {
+    id
+    accountNumber
+    status
+    updatedAt
+  }
+}
+
+# Delete Account
+mutation DeleteAccount {
+  deleteAccount(id: 1)
+}
+
+# ===== QUERIES =====
+
+# Get All Accounts
+query GetAllAccounts {
+  allAccounts {
+    id
+    accountNumber
+    customerId
+    accountType
+    balance
+    currency
+    status
+    createdAt
+  }
+}
+
+# Get Account by ID
+query GetAccountById {
+  accountById(id: 1) {
+    id
+    accountNumber
+    customerId
+    accountType
+    balance
+    currency
+    status
+    createdAt
+    updatedAt
+  }
+}
+
+# Get Account by Account Number
+query GetAccountByNumber {
+  accountByNumber(accountNumber: "ACC123456789ABC") {
+    id
+    accountNumber
+    customerId
+    accountType
+    balance
+    currency
+    status
+  }
+}
+
+# Get Accounts by Customer ID
+query GetAccountsByCustomerId {
+  accountsByCustomerId(customerId: 1) {
+    id
+    accountNumber
+    accountType
+    balance
+    currency
+    status
+  }
+}

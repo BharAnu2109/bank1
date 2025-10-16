@@ -1,0 +1,185 @@
+# Transaction Service GraphQL Examples
+# Use these queries and mutations in GraphiQL at http://localhost:8082/graphiql
+
+# ===== MUTATIONS =====
+
+# Create Transfer Transaction (All Dynamic Values)
+mutation CreateTransferTransaction {
+  createTransaction(input: {
+    fromAccountNumber: "ACC123456789ABC"
+    toAccountNumber: "ACC987654321XYZ"
+    amount: 250.00
+    currency: "USD"
+    transactionType: "TRANSFER"
+    description: "Payment for services"
+  }) {
+    id
+    transactionId
+    fromAccountNumber
+    toAccountNumber
+    amount
+    currency
+    transactionType
+    status
+    description
+    transactionDate
+    createdAt
+  }
+}
+
+# Create Deposit Transaction
+mutation CreateDepositTransaction {
+  createTransaction(input: {
+    fromAccountNumber: "EXTERNAL"
+    toAccountNumber: "ACC123456789ABC"
+    amount: 1000.00
+    currency: "USD"
+    transactionType: "DEPOSIT"
+    description: "Salary deposit"
+  }) {
+    transactionId
+    toAccountNumber
+    amount
+    transactionType
+    status
+    transactionDate
+  }
+}
+
+# Create Withdrawal Transaction
+mutation CreateWithdrawalTransaction {
+  createTransaction(input: {
+    fromAccountNumber: "ACC123456789ABC"
+    toAccountNumber: "EXTERNAL"
+    amount: 100.00
+    currency: "USD"
+    transactionType: "WITHDRAWAL"
+    description: "ATM withdrawal"
+  }) {
+    transactionId
+    fromAccountNumber
+    amount
+    transactionType
+    status
+  }
+}
+
+# Create Payment Transaction
+mutation CreatePaymentTransaction {
+  createTransaction(input: {
+    fromAccountNumber: "ACC123456789ABC"
+    toAccountNumber: "ACC555555555555"
+    amount: 75.50
+    currency: "USD"
+    transactionType: "PAYMENT"
+    description: "Utility bill payment"
+  }) {
+    transactionId
+    fromAccountNumber
+    toAccountNumber
+    amount
+    status
+  }
+}
+
+# Update Transaction Status to Completed
+mutation CompleteTransaction {
+  updateTransactionStatus(
+    transactionId: "TXN123456789ABC"
+    status: "COMPLETED"
+  ) {
+    transactionId
+    status
+    fromAccountNumber
+    toAccountNumber
+    amount
+  }
+}
+
+# Update Transaction Status to Failed
+mutation FailTransaction {
+  updateTransactionStatus(
+    transactionId: "TXN123456789ABC"
+    status: "FAILED"
+  ) {
+    transactionId
+    status
+  }
+}
+
+# ===== QUERIES =====
+
+# Get All Transactions
+query GetAllTransactions {
+  allTransactions {
+    id
+    transactionId
+    fromAccountNumber
+    toAccountNumber
+    amount
+    currency
+    transactionType
+    status
+    description
+    transactionDate
+    createdAt
+  }
+}
+
+# Get Transaction by ID
+query GetTransactionById {
+  transactionById(id: 1) {
+    id
+    transactionId
+    fromAccountNumber
+    toAccountNumber
+    amount
+    currency
+    transactionType
+    status
+    description
+    transactionDate
+  }
+}
+
+# Get Transaction by Transaction ID
+query GetTransactionByTransactionId {
+  transactionByTransactionId(transactionId: "TXN123456789ABC") {
+    id
+    transactionId
+    fromAccountNumber
+    toAccountNumber
+    amount
+    currency
+    transactionType
+    status
+    description
+    transactionDate
+  }
+}
+
+# Get Transactions from an Account
+query GetTransactionsByFromAccount {
+  transactionsByFromAccount(fromAccountNumber: "ACC123456789ABC") {
+    transactionId
+    toAccountNumber
+    amount
+    transactionType
+    status
+    description
+    transactionDate
+  }
+}
+
+# Get Transactions to an Account
+query GetTransactionsByToAccount {
+  transactionsByToAccount(toAccountNumber: "ACC123456789ABC") {
+    transactionId
+    fromAccountNumber
+    amount
+    transactionType
+    status
+    description
+    transactionDate
+  }
+}

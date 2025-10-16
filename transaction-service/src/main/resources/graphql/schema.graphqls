@@ -1,0 +1,35 @@
+type Transaction {
+    id: ID!
+    transactionId: String!
+    fromAccountNumber: String!
+    toAccountNumber: String!
+    amount: Float!
+    currency: String!
+    transactionType: String!
+    status: String!
+    description: String
+    transactionDate: String!
+    createdAt: String!
+}
+
+input TransactionInput {
+    fromAccountNumber: String!
+    toAccountNumber: String!
+    amount: Float!
+    currency: String!
+    transactionType: String!
+    description: String
+}
+
+type Query {
+    transactionById(id: ID!): Transaction
+    transactionByTransactionId(transactionId: String!): Transaction
+    transactionsByFromAccount(fromAccountNumber: String!): [Transaction]
+    transactionsByToAccount(toAccountNumber: String!): [Transaction]
+    allTransactions: [Transaction]
+}
+
+type Mutation {
+    createTransaction(input: TransactionInput!): Transaction
+    updateTransactionStatus(transactionId: String!, status: String!): Transaction
+}

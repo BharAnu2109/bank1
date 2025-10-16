@@ -1,0 +1,50 @@
+type Customer {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneNumber: String!
+    dateOfBirth: String!
+    address: String!
+    city: String!
+    country: String!
+    postalCode: String!
+    status: String!
+    createdAt: String!
+    updatedAt: String!
+}
+
+input CustomerInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneNumber: String!
+    dateOfBirth: String!
+    address: String!
+    city: String!
+    country: String!
+    postalCode: String!
+}
+
+input UpdateCustomerInput {
+    id: ID!
+    email: String
+    phoneNumber: String
+    address: String
+    city: String
+    postalCode: String
+}
+
+type Query {
+    customerById(id: ID!): Customer
+    customerByEmail(email: String!): Customer
+    customersByCity(city: String!): [Customer]
+    allCustomers: [Customer]
+}
+
+type Mutation {
+    createCustomer(input: CustomerInput!): Customer
+    updateCustomer(input: UpdateCustomerInput!): Customer
+    updateCustomerStatus(id: ID!, status: String!): Customer
+    deleteCustomer(id: ID!): Boolean
+}

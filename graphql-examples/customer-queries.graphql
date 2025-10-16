@@ -1,0 +1,144 @@
+# Customer Service GraphQL Examples
+# Use these queries and mutations in GraphiQL at http://localhost:8083/graphiql
+
+# ===== MUTATIONS =====
+
+# Create Customer (All Dynamic Values)
+mutation CreateCustomer {
+  createCustomer(input: {
+    firstName: "John"
+    lastName: "Doe"
+    email: "john.doe@example.com"
+    phoneNumber: "+1234567890"
+    dateOfBirth: "1990-01-15"
+    address: "123 Main Street"
+    city: "New York"
+    country: "USA"
+    postalCode: "10001"
+  }) {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    dateOfBirth
+    address
+    city
+    country
+    postalCode
+    status
+    createdAt
+    updatedAt
+  }
+}
+
+# Create Another Customer
+mutation CreateCustomer2 {
+  createCustomer(input: {
+    firstName: "Jane"
+    lastName: "Smith"
+    email: "jane.smith@example.com"
+    phoneNumber: "+1987654321"
+    dateOfBirth: "1985-05-20"
+    address: "456 Oak Avenue"
+    city: "Los Angeles"
+    country: "USA"
+    postalCode: "90001"
+  }) {
+    id
+    firstName
+    lastName
+    email
+    status
+  }
+}
+
+# Update Customer (Dynamic Values)
+mutation UpdateCustomer {
+  updateCustomer(input: {
+    id: 1
+    phoneNumber: "+1555555555"
+    address: "789 Pine Street"
+    city: "Chicago"
+    postalCode: "60601"
+  }) {
+    id
+    phoneNumber
+    address
+    city
+    postalCode
+    updatedAt
+  }
+}
+
+# Update Customer Status
+mutation UpdateCustomerStatus {
+  updateCustomerStatus(id: 1, status: "ACTIVE") {
+    id
+    status
+    updatedAt
+  }
+}
+
+# Delete Customer
+mutation DeleteCustomer {
+  deleteCustomer(id: 2)
+}
+
+# ===== QUERIES =====
+
+# Get All Customers
+query GetAllCustomers {
+  allCustomers {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    city
+    country
+    status
+    createdAt
+  }
+}
+
+# Get Customer by ID
+query GetCustomerById {
+  customerById(id: 1) {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    dateOfBirth
+    address
+    city
+    country
+    postalCode
+    status
+    createdAt
+    updatedAt
+  }
+}
+
+# Get Customer by Email
+query GetCustomerByEmail {
+  customerByEmail(email: "john.doe@example.com") {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+  }
+}
+
+# Get Customers by City
+query GetCustomersByCity {
+  customersByCity(city: "New York") {
+    id
+    firstName
+    lastName
+    email
+    city
+  }
+}
